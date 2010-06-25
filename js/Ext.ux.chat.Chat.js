@@ -60,14 +60,14 @@ Ext.extend(Ext.ux.chat.Chat, Ext.util.Observable, {
                         float:"left"
                         ,width:(this.width - 100 - 15 - 4).toString() + "px"
                         ,height:"100%"
-                    }/*
+                    }
                     ,children:[{
                         tag:"textarea"
                         ,style:{
                             width:"100%"
                             ,height:"99%"                            
                         }
-                    }]*/
+                    }]
                 }, {
                     tag:"button"
                     ,html:"Envoyer"
