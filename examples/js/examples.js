@@ -6,11 +6,7 @@ Ext.onReady(function() {
         ,editorHeight:100
     });
 
-    chat.on({
-        message:function(chat, data) {
-            console.log("message", this, arguments);
-        }
-    });
+    chat.on({message:console.log});
 
     chat.render(Ext.getBody());
 
