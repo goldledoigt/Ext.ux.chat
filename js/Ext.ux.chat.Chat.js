@@ -185,4 +185,6 @@ if (Ext.Component) {
         }
     });
 
+    Ext.reg("chat", Ext.ux.chat.Chat);
 }
+
