@@ -134,16 +134,53 @@ if (!Ext.Component) {
                 layout:"border"
                 ,items:[{
                     region:"center"
+                    ,ref:"list"
+                    ,margins:"5"
                 }, {
                     region:"south"
+                    ,margins:"0 5 5 5"
+                    ,layout:"border"
+                    ,border:false
                     ,height:this.editorHeight
+                    ,items:[{
+                        region:"center"
+                        ,xtype:"textarea"
+                        ,ref:"../textarea"
+                        ,border:false
+                        ,margins:"0 5 0 0"
+                    }, {
+                        region:"east"
+                        ,xtype:"button"
+                        ,text:"Envoyer"
+                        ,width:100
+                        ,scope:this
+                        ,handler:this.onButtonClick
+                    }]
                 }]
             });
+
+            this.addEvents("message");
 
             Ext.ux.chat.Chat.superclass.initComponent.call(this);
 
         }
 
+        ,onButtonClick:function() {
+            var msg = this.textarea.getValue();
+            this.addMessage({from:"me", msg:msg});
+            this.fireEvent("message", this, {from:"me", msg:msg});
+            this.textarea.reset();
+            this.textarea.focus();
+        }
+
+        ,addMessage:function(o) {
+            this.list.add({
+                border:false
+                ,padding:"2 5"
+                ,html:o.from + ": " + o.msg
+            });
+            this.list.doLayout();
+        }
     });
 
 }
