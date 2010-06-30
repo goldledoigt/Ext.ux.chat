@@ -59,7 +59,7 @@ if (!Ext.Component) {
                         tag:"div"
                         ,cls:"x-chat-form-editor"
                         ,style:{
-                            float:"left"
+                            "float":"left"
                             ,width:(this.width - 100 - 15 - 4).toString() + "px"
                             ,height:"100%"
                         }
@@ -75,7 +75,7 @@ if (!Ext.Component) {
                         ,html:"Envoyer"
                         ,cls:"x-chat-form-button"
                         ,style:{
-                            float:"left"
+                            "float":"left"
                             ,width:"100px"
                             ,height:"100%"
                             ,"font-size":"16px"
@@ -84,7 +84,7 @@ if (!Ext.Component) {
                 }]
             };
 
-            this.el = dh.append(el, spec);
+            this.el = Ext.get(dh.append(el, spec));
 
             this.fireEvent("render", this);
         }
