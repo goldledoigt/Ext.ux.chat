@@ -16,6 +16,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
                 region:"center"
                 ,ref:"list"
                 ,margins:"5"
+                ,autoScroll:true
             }, {
                 region:"south"
                 ,margins:"0 5 5 5"
