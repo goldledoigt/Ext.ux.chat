@@ -9,15 +9,18 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
 
     ,editorHeight:0
 
+    ,webcamCollapsed:false
+    ,webcamCollapsible:false
+    
     ,initComponent:function() {
         Ext.apply(this, {
             layout:"border"
             ,items:[{
 	      region:"north"
 	      ,ref:"camPanel"
-	      ,height:200
-	      ,collapsible:true
-	      ,collapsed:true
+	      ,height:180
+	      ,collapsible:this.webcamCollapsible
+	      ,collapsed:this.webcamCollapsed
 	      ,cls:"x-chat-campanel"
 	      ,cmargins:"5 5 0 5"
 	      ,bodyStyle:"border-width:0 0 1 0"
@@ -44,12 +47,14 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
                     ,xtype:"textarea"
                     ,ref:"../editor"
                     ,border:false
+                    ,cls:"chat-textarea"
+                    ,emptyText:'Saisissez votre message puis cliquez sur envoyer'
                     ,margins:"0 5 0 0"
                 }, {
                     region:"east"
                     ,xtype:"button"
                     ,text:"Envoyer"
-                    ,width:100
+                    ,width:75
                     ,scope:this
                     ,handler:this.onButtonClick
                 }]
