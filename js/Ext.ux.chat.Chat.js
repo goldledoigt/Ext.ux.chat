@@ -72,7 +72,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
             }]
         });
 
-	this.addEvents("send", "recieve");
+	this.addEvents("send", "recieve", "openWebcam");
 
         Ext.ux.chat.Chat.superclass.initComponent.call(this);
 
@@ -93,7 +93,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
 	    ,html:this.msgTpl.apply(data)
         });
         this.list.doLayout();
-	this.fireEvent("recieve", this, data);
+        this.fireEvent("recieve", this, data);
     }
 
     ,onButtonClick:function() {
@@ -106,23 +106,26 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
 
     ,onCamPanelClick:function() {
       if (!this.flash) {
-	this.flash = new Ext.FlashComponent({
-	  url:"/apps/whiteboard/static/js/StratusWidget.swf"
-	  ,backgroundColor:"#FFFFFF"
-	  //,flashVersion:"10.0.0"
-	  ,flashVars:{
-	    mode:"master"
-	    ,useVideo:1
-	    ,doStream:1
-	    ,debug:1
-//	    ,height:200
-//	    ,width:300
-	    ,r:Math.random()
-	  }
-	});
-	this.camPanel.add(this.flash);
-	this.camPanel.doLayout();
-	console.log("click", this.flash);
+        this.flash = new Ext.FlashComponent({
+          url:"/apps/whiteboard/static/js/StratusWidget2.swf"
+          ,backgroundColor:"#FFFFFF"
+          //,flashVersion:"10.0.0"
+          ,flashVars:{
+            mode:"master"
+            ,useVideo:1
+            ,doStream:1
+            ,debug:(window.location.search.substring(1).indexOf('DEBUG') > -1)?1:0
+    //	    ,height:200
+    //	    ,width:300
+            ,r:Math.random()
+          }
+        });
+        
+        this.camPanel.add(this.flash);
+        this.camPanel.doLayout();
+        this.fireEvent("openWebcam", this);
+        this.webcam = this.flash.el.dom;
+        //console.log("click", this.flash);
       }
     }
 

@@ -6,6 +6,8 @@ Ext.ux.chat.ChatLite = function(config) {
     this.addEvents("render", "message");
 };
 
+
+
 Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
 
     width:0
@@ -13,12 +15,15 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
     ,height:0
 
     ,editorHeight:0
-
+    ,webcamHeight:160
+    ,editorInitialMessage:'Saisissez votre message puis cliquez sur envoyer'
+    ,webcamTargetId:'chat-webcam-container'
     ,render:function(el) {
 
         var dh = Ext.DomHelper;
-
-
+        
+        console.log(this.height, this.editorHeight , this.webcamHeight );
+        
         var spec = {
             tag:"div"
             ,cls:"x-chat"
@@ -27,11 +32,30 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                 ,height:this.height.toString() + "px"
             }
             ,children:[{
+                  tag:"div"
+                ,cls:"x-chat-webcam"
+                ,style:{
+                    overflow:"auto"
+                    ,height:this.webcamHeight.toString()  + 'px'
+                    ,width:this.width.toString() + "px"
+                    ,'text-align':'center'
+                }
+                ,children:[
+                    {
+                        tag:'img'
+                        ,id:this.webcamTargetId
+                        ,src:'/apps/whiteboard/static/img/webcamactivate.png'
+                        ,onclick:'chat.openWebcam();'
+                        ,style:'cursor:pointer'
+                    }
+                ]
+            
+            },{
                 tag:"div"
                 ,cls:"x-chat-list"
                 ,style:{
                     overflow:"auto"
-                    ,height:(this.height - this.editorHeight - 15 - 4).toString() + "px"
+                    ,height:(this.height - this.editorHeight - this.webcamHeight - 20 ).toString() + "px"
                 }
             }, {
                 tag:"div"
@@ -44,30 +68,34 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                     ,cls:"x-chat-form-editor"
                     ,style:{
                         "float":"left"
-                        ,width:(this.width - 100 - 15 - 4).toString() + "px"
+                        ,width:(this.width - 90).toString() + "px"
                         ,height:"100%"
                     }
                     ,children:[{
                         tag:"textarea"
+                        ,onclick:"if (this.value == chat.editorInitialMessage) {this.value='';this.style.color='black'}"
+                        ,onblur:"if (this.value == '') {this.value=chat.editorInitialMessage;this.style.color='silver'}"
+                        ,html:this.editorInitialMessage
                         ,style:{
-                            width:"100%"
-                            ,height:"99%"
+                            width:'100%'
+                            ,height:this.editorHeight
+                            ,color:'silver'
+                        }
+                        }]
+                    },{
+                        tag:"button"
+                        ,html:"Envoyer"
+                        ,cls:"x-chat-form-button"
+                        ,style:{
+                            "float":"left"
+                            ,width:'70px'
+                            ,height:this.editorHeight
+                            ,"font-size":"16px"
                         }
                     }]
-                }, {
-                    tag:"button"
-                    ,html:"Envoyer"
-                    ,cls:"x-chat-form-button"
-                    ,style:{
-                        "float":"left"
-                        ,width:"100px"
-                        ,height:"100%"
-                        ,"font-size":"16px"
-                    }
-                }]
             }]
         };
-
+        
 	    this.el = Ext.get(dh.append(el, spec));
 
         this.list = Ext.get(this.getList());
@@ -75,10 +103,21 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         this.button = Ext.get(this.getButton());
 
         this.doLayout();
-
+        
+        
         this.fireEvent("render", this);
     }
-
+    ,openWebcam:function() {
+        if (!this.webcam) {
+            swfobject.embedSWF("/apps/whiteboard/static/js/StratusWidget2.swf?doStream=1&debug="+((window.location.search.substring(1).indexOf('DEBUG') > -1)?1:0)+"&r="+Math.random(), this.webcamTargetId, (this.width - 15) , this.webcamHeight, "10.0.0", '', {}, {}, {});
+            this.webcam = Ext.get(this.webcamTargetId).dom;
+            }
+        else {
+            this.webcam.remoteReady();
+        }
+        
+  
+    }
     ,doLayout:function() {
         var ctn = Ext.DomQuery.selectNode("div.x-chat-form-editor");
         var height = Ext.fly(ctn).getHeight();
@@ -93,7 +132,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
     ,setHeight:function(height) {
       this.height = height;
       this.el.setHeight(height);
-      this.list.setHeight(this.height - this.editorHeight - 15 - 4);
+      this.list.setHeight(this.height - this.editorHeight - 15 - 4 - this.webcamHeight );
     }
 
     ,clearEditor:function() {
