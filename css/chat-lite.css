@@ -25,10 +25,12 @@
 
 .x-chat-form-editor textarea {
     border:none;
+    font:12px tahoma,arial,helvetica,sans-serif;
 }
 
 .x-chat-form-button {
     xborder: 1px solid red;
+    font:14px tahoma,arial,helvetica,sans-serif;
 }
 
 

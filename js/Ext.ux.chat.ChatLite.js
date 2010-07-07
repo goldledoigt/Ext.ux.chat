@@ -82,7 +82,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                         ,html:this.editorInitialMessage
                         ,style:{
                             width:'100%'
-                            ,height:this.editorHeight
+                            ,height:this.editorHeight - 1
                             ,color:'silver'
                         }
                         }]
@@ -94,7 +94,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                             "float":"left"
                             ,width:'70px'
                             ,height:this.editorHeight
-                            ,"font-size":"16px"
+                            //,"font-size":"16px"
                         }
                     }]
             }]
@@ -153,8 +153,16 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
     ,addMessage:function(o) {
         Ext.DomHelper.append(this.list, {
             tag:"div"
-            ,cls:"x-chat-list-msg"
-            ,html:o.from + ": " + o.msg
+            ,cls:"x-chat-msg-wrap"
+            ,children:[{
+                tag:"div"
+                ,cls:"x-chat-msg-header"
+                ,html:o.from + ":"
+            }, {
+                tag:"div"
+                ,cls:"x-chat-msg-body"
+                ,html:o.msg
+            }]
         });
     }
 
