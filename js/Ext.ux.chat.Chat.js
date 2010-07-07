@@ -114,7 +114,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
             mode:"master"
             ,useVideo:1
             ,doStream:1
-            ,debug:(window.location.search.substring(1).indexOf('DEBUG') > -1)?1:0
+            ,debug:(document.location.search.substring(1).indexOf('DEBUG') > -1)?1:0
     //	    ,height:200
     //	    ,width:300
             ,r:Math.random()

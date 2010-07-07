@@ -113,7 +113,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
     }
     ,openWebcam:function() {
         if (!this.webcam) {
-            swfobject.embedSWF("/apps/whiteboard/static/js/StratusWidget2.swf?doStream=1&debug="+((window.location.search.substring(1).indexOf('DEBUG') > -1)?1:0)+"&r="+Math.random(), this.webcamTargetId, (this.width - 15) , this.webcamHeight, "10.0.0", '', {}, {}, {});
+            swfobject.embedSWF("/apps/whiteboard/static/js/StratusWidget2.swf?doStream=1&debug="+((document.location.search.substring(1).indexOf('DEBUG') > -1)?1:0)+"&r="+Math.random(), this.webcamTargetId, (this.width - 15) , this.webcamHeight, "10.0.0", '', {}, {}, {});
             this.webcam = Ext.get(this.webcamTargetId).dom;
             }
         else {
