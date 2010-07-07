@@ -72,7 +72,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
             }]
         });
 
-	this.addEvents("send", "recieve", "openWebcam");
+        this.addEvents("send", "recieve", "openWebcam");
 
         Ext.ux.chat.Chat.superclass.initComponent.call(this);
 
@@ -128,7 +128,14 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
         //console.log("click", this.flash);
       }
     }
-
+    ,webcamClosed:function() {
+        this.setWebcamIntro();
+        this.webcam = null;
+    }
+    ,setWebcamIntro:function() {
+        this.flash.destroy();
+        this.flash = null;
+    }
 });
 
 Ext.reg("chat", Ext.ux.chat.Chat);

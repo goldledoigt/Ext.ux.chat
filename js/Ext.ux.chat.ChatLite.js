@@ -24,6 +24,15 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         
         console.log(this.height, this.editorHeight , this.webcamHeight );
         
+        this.webcamIntro =    {
+                        tag:'img'
+                        ,id:this.webcamTargetId
+                        ,src:'/apps/whiteboard/static/img/webcamactivate.png'
+                        ,onclick:'chat.openWebcam();'
+                        ,style:'cursor:pointer'
+                    }
+        
+        
         var spec = {
             tag:"div"
             ,cls:"x-chat"
@@ -34,6 +43,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
             ,children:[{
                   tag:"div"
                 ,cls:"x-chat-webcam"
+                ,id:'x-chat-webcampanel'
                 ,style:{
                     overflow:"auto"
                     ,height:this.webcamHeight.toString()  + 'px'
@@ -41,13 +51,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                     ,'text-align':'center'
                 }
                 ,children:[
-                    {
-                        tag:'img'
-                        ,id:this.webcamTargetId
-                        ,src:'/apps/whiteboard/static/img/webcamactivate.png'
-                        ,onclick:'chat.openWebcam();'
-                        ,style:'cursor:pointer'
-                    }
+                    this.webcamIntro
                 ]
             
             },{
@@ -103,7 +107,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         this.button = Ext.get(this.getButton());
 
         this.doLayout();
-        
+        this.setWebcamIntro();
         
         this.fireEvent("render", this);
     }
@@ -115,8 +119,15 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         else {
          
         }
-        
-  
+    }
+    ,webcamClosed:function() {
+        this.setWebcamIntro();
+        this.webcam = null;
+    }
+    ,setWebcamIntro:function() {
+        var dh = Ext.DomHelper;
+        var el = Ext.get('x-chat-webcampanel');
+        dh.overwrite(el, this.webcamIntro);
     }
     ,doLayout:function() {
         var ctn = Ext.DomQuery.selectNode("div.x-chat-form-editor");
