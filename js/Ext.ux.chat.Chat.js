@@ -10,22 +10,31 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     ,editorHeight:0
 
     ,initComponent:function() {
-        Ext.apply(this, {
+
+      this.msgTpl = new Ext.Template(
+	'<div class="x-chat-msg-wrap">'
+	,'<div class="x-chat-msg-header">{from}:</div>'
+	,'<div class="x-chat-msg-body">{msg}</div>'
+	,'</div>'
+	,{compiled:true}
+      );
+
+      Ext.apply(this, {
             layout:"border"
             ,items:[{
 	      region:"north"
 	      ,ref:"camPanel"
 	      ,height:200
-	      ,collapsible:true
-	      ,collapsed:true
+//	      ,collapsible:true
+//	      ,collapsed:true
 	      ,cls:"x-chat-campanel"
 	      ,cmargins:"5 5 0 5"
 	      ,bodyStyle:"border-width:0 0 1 0"
 	      ,listeners:{
 		scope:this
-		,afterrender:function() {
+		,afterrender:function(panel) {
 		  console.log("afterrender", this, arguments, this.body.id);
-		  this.body.on({scope:this, click:this.onCamPanelClick});
+		  panel.body.on({scope:this, click:this.onCamPanelClick});
 		}
 	      }
 	    }, {
@@ -66,14 +75,18 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
         this.editor.reset();
     }
 
-    ,addMessage:function(o) {
+    ,addMessage:function(data) {
+      var style = (this.list.items.getCount() % 2)
+	? "background-color:#EFEFEF" : "";
         this.list.add({
             border:false
-            ,padding:"2 5"
-            ,html:o.from + ": " + o.msg
+            //,padding:"2 5"
+	    ,cls:"x-chat-msg"
+	    ,bodyStyle:style
+	    ,html:this.msgTpl.apply(data)
         });
         this.list.doLayout();
-      this.fireEvent("recieve", this, o);
+	this.fireEvent("recieve", this, data);
     }
 
     ,onButtonClick:function() {

@@ -1,0 +1,32 @@
+.x-chat {
+    border: 1px solid #99BBE8;
+    background-color:#DFE8F6;
+}
+
+.x-chat-list {
+    border: 1px solid #99BBE8;
+    background-color:#FFFFFF;
+    margin:5px;
+}
+
+.x-chat-list-msg {
+    margin:2px 5px;
+}
+
+.x-chat-form {
+    margin:0 5px 5px 5px;
+}
+
+.x-chat-form-editor {
+    border: 1px solid #99BBE8;
+    background-color:#FFFFFF;
+    margin-right:5px;
+}
+
+.x-chat-form-editor textarea {
+    border:none;
+}
+
+.x-chat-form-button {
+    xborder: 1px solid red;
+}
