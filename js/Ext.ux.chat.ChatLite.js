@@ -113,7 +113,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
             this.webcam = Ext.get(this.webcamTargetId).dom;
             }
         else {
-            this.webcam.remoteReady();
+         
         }
         
   
