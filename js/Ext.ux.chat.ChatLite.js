@@ -22,7 +22,6 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
 
         var dh = Ext.DomHelper;
         
-        console.log(this.height, this.editorHeight , this.webcamHeight );
         
         this.webcamIntro =    {
                         tag:'img'
@@ -78,7 +77,8 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                     ,children:[{
                         tag:"textarea"
                         ,onclick:"if (this.value == chat.editorInitialMessage) {this.value='';this.style.color='black'}"
-                        ,onblur:"if (this.value == '') {this.value=chat.editorInitialMessage;this.style.color='silver'}"
+                        ,onblur:"if (this.value == '') {chat.clearEditor();}"
+                        ,onKeyDown:"if ((event.keyCode || event.charCode) == 13 ) {chat.onButtonClick();};"
                         ,html:this.editorInitialMessage
                         ,style:{
                             width:'100%'
@@ -180,10 +180,12 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
 
     ,onButtonClick:function() {
         var msg = this.editor.getValue();
-        this.addMessage({from:"me", msg:msg});
-        this.fireEvent("message", this, {from:"me", msg:msg});
-        this.clearEditor();
-        this.editor.focus();
+        if (msg != '' && msg != this.editorInitialMessage) {
+            this.addMessage({from:"me", msg:msg});
+            this.fireEvent("message", this, {from:"me", msg:msg});
+            this.clearEditor();
+            this.editor.focus();
+        }
     }
 
 });
