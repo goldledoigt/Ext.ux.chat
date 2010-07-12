@@ -38,7 +38,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
 	      ,listeners:{
 		scope:this
 		,afterrender:function(panel) {
-		  console.log("afterrender", this, arguments, this.body.id);
+		  //console.log("afterrender", this, arguments, this.body.id);
 		  panel.body.on({scope:this, click:this.onCamPanelClick});
 		}
 	      }
@@ -58,6 +58,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
                     ,xtype:"textarea"
                     ,ref:"../editor"
                     ,border:false
+                    ,enableKeyEvents :true
                     ,cls:"chat-textarea"
                     ,emptyText:'Saisissez votre message puis cliquez sur envoyer'
                     ,margins:"0 5 0 0"
@@ -75,6 +76,13 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
         this.addEvents("send", "recieve", "openWebcam");
 
         Ext.ux.chat.Chat.superclass.initComponent.call(this);
+        
+        this.editor.on('keydown', function(textarea, event) {
+            //console.log('keydown', event.charCode, event.keyCode );
+            if ( event.charCode == 13 ||  event.keyCode == 13) {
+                this.onButtonClick();
+            }
+        }, this);
 
     }
 
@@ -115,7 +123,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
             ,useVideo:1
             ,doStream:1
             ,debug:(document.location.search.substring(1).indexOf('DEBUG') > -1)?1:0
-    //	    ,height:200
+    //	    ,height:200 
     //	    ,width:300
             ,r:Math.random()
           }
