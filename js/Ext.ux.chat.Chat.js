@@ -102,6 +102,8 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
         });
         this.list.doLayout();
         this.fireEvent("recieve", this, data);
+        // scroll down
+        this.list.body.dom.scrollTop = this.list.body.dom.scrollHeight;
     }
 
     ,onButtonClick:function() {

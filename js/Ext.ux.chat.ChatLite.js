@@ -164,6 +164,9 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                 ,html:o.msg
             }]
         });
+        // scroll down
+        this.list.dom.scrollTop = this.list.dom.scrollHeight;
+ 
     }
 
     ,getList:function() {
