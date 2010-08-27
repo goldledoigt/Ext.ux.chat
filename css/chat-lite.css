@@ -41,6 +41,10 @@ x    border-bottom:1px solid #99BBE8;
     padding:4px;
 }
 
+.x-chat-msg-wrap.striped {
+    background-color:#EFEFEF;
+}
+
 .x-chat-msg-header, .x-chat-msg-body {
     font:12px tahoma,arial,helvetica,sans-serif;
 }
