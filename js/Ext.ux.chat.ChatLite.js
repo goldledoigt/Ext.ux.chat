@@ -30,7 +30,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
             ,style:'cursor:pointer'
         };
 
-        console.log("WIDTH", this.width);
+        //console.log("WIDTH", this.width);
         
         var spec = {
             tag:"div"
@@ -77,8 +77,8 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                     ,children:[{
                         tag:"textarea"
                         ,onclick:"if (this.value == chat.editorInitialMessage) {this.value='';this.style.color='black'}"
-                        ,onblur:"if (this.value == '') {console.log('blur');chat.clearEditor();}"
-                        ,onKeyUp:"if ((event.keyCode || event.charCode) == 13 ) {chat.onButtonClick();};"
+                        ,onblur:"if (this.value == '') {chat.clearEditor();}"
+                        ,onKeyUp:"if ((event.keyCode || event.charCode) == 13 ) {(function() {chat.onButtonClick();chat.button.focus();chat.button.blur();}).defer(10);};"
                         ,html:this.editorInitialMessage
                         ,style:{
                             width:'100%'
@@ -100,7 +100,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
             }]
         };
         
-        console.log("SPEC", spec.children[0].style.width);
+        //console.log("SPEC", spec.children[0].style.width);
         
 	    this.el = Ext.get(dh.append(el, spec));
 
@@ -150,8 +150,10 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
     }
 
     ,clearEditor:function() {
-        this.editor.dom.value = "";
-        console.log("clearEditor", "*"+this.editor.dom.value+"*", this.editor.dom.value.length);
+        this.editor.dom.value = chat.editorInitialMessage;
+        this.editor.dom.style.color='silver';
+        //"if (this.value == chat.editorInitialMessage) {this.value='';this.style.color='black'}"
+        //console.log("clearEditor", "*"+this.editor.dom.value+"*", this.editor.dom.value.length);
     }
 
     ,addMessage:function(o) {
@@ -186,7 +188,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
 
     ,onButtonClick:function() {
         var msg = this.editor.getValue();
-        console.log("MESSAGE", msg, msg.length, msg.indexOf("\n"));
+        //console.log("MESSAGE", msg, msg.length, msg.indexOf("\n"));
         if (msg !== '' && msg != this.editorInitialMessage && (msg.indexOf("\n") === -1 || msg.length > 1)) {
             this.addMessage({from:"me", msg:msg});
             this.fireEvent("message", this, {from:"me", msg:msg});
