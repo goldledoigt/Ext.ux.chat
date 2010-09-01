@@ -107,7 +107,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     }
 
     ,onButtonClick:function() {
-        var msg = this.editor.getValue();
+        var msg = this.linkifyString( this.editor.getValue() );
         this.addMessage({from:"me", msg:msg});
         this.fireEvent("send", this, {from:"me", msg:msg});
         this.clearEditor();
@@ -145,6 +145,11 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     ,setWebcamIntro:function() {
         this.flash.destroy();
         this.flash = null;
+    }
+    ,linkifyString:function( inString ) {
+        var re = new RegExp("(https?://[^\f\n\r\t\v ]+)", "gi");
+        var linkified = inString.replace(re,'<a href="$1" target="_blank" >$1</a>' );
+        return linkified;
     }
 });
 

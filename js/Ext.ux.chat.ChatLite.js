@@ -187,7 +187,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
     }
 
     ,onButtonClick:function() {
-        var msg = this.editor.getValue();
+        var msg = this.linkifyString( this.editor.getValue() );
         //console.log("MESSAGE", msg, msg.length, msg.indexOf("\n"));
         if (msg !== '' && msg != this.editorInitialMessage && (msg.indexOf("\n") === -1 || msg.length > 1)) {
             this.addMessage({from:"me", msg:msg});
@@ -196,5 +196,9 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
             this.editor.focus();
         }
     }
-
+    ,linkifyString:function( inString ) {
+        var re = new RegExp("(https?://[^\f\n\r\t\v ]+)", "gi");
+        var linkified = inString.replace(re,'<a href="$1" target="_blank" >$1</a>' );
+        return linkified;
+    }
 });
