@@ -39,6 +39,21 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
             }
             ,children:[{
                 tag:"div"
+                ,cls:"x-chat-title"
+                ,style:{
+                    height:"25px"
+                }
+                ,children:[{
+                    tag:"div"
+                    ,cls:"x-chat-title-wrapper"
+                    ,html:"Communications"
+                }, {
+                    tag:"div"
+                    ,cls:"x-chat-tool"
+                    ,onclick:"chat.toggleWebcamCollapse()"
+                }]
+            }, {
+                tag:"div"
                 ,cls:"x-chat-webcam"
                 ,id:'x-chat-webcampanel'
                 ,style:{
@@ -92,7 +107,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                         ,style:{
                             "float":"left"
                             ,"font-size":"12px"
-                            ,width:'55px'
+                            ,width:'58px'
                             ,height:this.editorHeight
                             //,"font-size":"16px"
                         }
@@ -145,7 +160,8 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
     ,setHeight:function(height) {
         this.height = height;
         this.el.setHeight(height);
-        this.list.setHeight(this.height - this.editorHeight - 15 - 4 - 4 - this.webcamHeight);
+        var webcamHeight = (this.webcamCollapsed) ? 0 : this.webcamHeight
+        this.list.setHeight(this.height - this.editorHeight - 15 - 4 - 4 - 25 - webcamHeight);
         this.list.dom.scrollTop = this.list.dom.scrollHeight;
     }
 
@@ -201,4 +217,22 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         var linkified = inString.replace(re,'<a href="$1" target="_blank" >$1</a>' );
         return linkified;
     }
+    
+    ,toggleWebcamCollapse:function() {
+        var tool = Ext.DomQuery.selectNode("div.x-chat-tool");
+        var webcam = Ext.DomQuery.selectNode("div.x-chat-webcam");
+        if (!chat.webcamCollapsed) {
+            Ext.get(webcam).setStyle("display", "none");
+            Ext.fly(tool).setStyle("background-position", "0 -30px");
+            chat.webcamCollapsed = true;
+        } else {
+            Ext.get(webcam).setStyle("display", "block");
+            Ext.fly(tool).setStyle("background-position", "0 -15px");
+            chat.webcamCollapsed = false;
+        }
+        var height = (Ext.isIE)?document.body.clientHeight - 20:window.innerHeight;
+        chat.setHeight(height- 0.5);
+        console.log("click");
+    }
+
 });

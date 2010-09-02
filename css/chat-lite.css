@@ -3,6 +3,28 @@
     background-color:#DFE8F6;
 }
 
+.x-chat-title {
+    color:#15428B;
+    border-bottom: 1px solid #99BBE8;
+    font-family:tahoma,arial,verdana,sans-serif;
+    font-size:11px;
+    font-weight:bold;
+    background:url("../img/white-top-bottom.gif") repeat-x scroll 0 0 transparent;
+}
+
+.x-chat-title-wrapper {
+    padding:5px 0 0 5px;
+}
+
+.x-chat-tool {
+    background:url("../img/tool-sprites.gif") repeat-x scroll 0 -15px transparent;
+    width:15px;
+    height:15px;
+    margin:0 3px 0 auto;
+    top:-15px;
+    position:relative;
+}
+
 .x-chat-list {
     border: 1px solid #99BBE8;
     background-color:#FFFFFF;
