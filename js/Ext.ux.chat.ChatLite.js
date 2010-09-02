@@ -30,8 +30,6 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
             ,style:'cursor:pointer'
         };
 
-        console.log("WIDTH", this.width);
-
         var spec = {
             tag:"div"
             ,cls:"x-chat"
@@ -71,13 +69,14 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                     ,cls:"x-chat-form-editor"
                     ,style:{
                         "float":"left"
-                        ,width:(this.width - 90).toString() + "px"
+                        ,width:(this.width - 75).toString() + "px"
                         ,height:"100%"
                     }
                     ,children:[{
                         tag:"textarea"
                         ,onclick:"if (this.value == chat.editorInitialMessage) {this.value='';this.style.color='black'}"
-                        ,onblur:"if (this.value == '') {console.log('blur');chat.clearEditor();}"
+                        ,onblur:"if (this.value == '') {chat.clearEditor();}"
+                        ,onKeyDown:"if (this.value == chat.editorInitialMessage) {this.value='';this.style.color='black';}"
                         ,onKeyUp:"if ((event.keyCode || event.charCode) == 13 ) {chat.onButtonClick();};"
                         ,html:this.editorInitialMessage
                         ,style:{
@@ -92,16 +91,17 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                         ,cls:"x-chat-form-button"
                         ,style:{
                             "float":"left"
-                            ,width:'70px'
+                            ,"font-size":"12px"
+                            ,width:'55px'
                             ,height:this.editorHeight
                             //,"font-size":"16px"
                         }
                     }]
             }]
         };
-        
-        console.log("SPEC", spec.children[0].style.width);
-        
+
+        //console.log("SPEC", spec.children[0].style.width);
+
 	    this.el = Ext.get(dh.append(el, spec));
 
         this.list = Ext.get(this.getList());
@@ -110,7 +110,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
 
         this.doLayout();
         this.setWebcamIntro();
-        
+
         this.fireEvent("render", this);
     }
     ,openWebcam:function() {
@@ -119,7 +119,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
             this.webcam = Ext.get(this.webcamTargetId).dom;
             }
         else {
-         
+
         }
     }
     ,webcamClosed:function() {
@@ -150,8 +150,10 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
     }
 
     ,clearEditor:function() {
-        this.editor.dom.value = "";
-        console.log("clearEditor", "*"+this.editor.dom.value+"*", this.editor.dom.value.length);
+        this.editor.dom.value = chat.editorInitialMessage;
+        this.editor.dom.style.color='silver';
+        //"if (this.value == chat.editorInitialMessage) {this.value='';this.style.color='black'}"
+        //console.log("clearEditor", "*"+this.editor.dom.value+"*", this.editor.dom.value.length);
     }
 
     ,addMessage:function(o) {
@@ -185,8 +187,8 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
     }
 
     ,onButtonClick:function() {
-        var msg = this.editor.getValue();
-        console.log("MESSAGE", msg, msg.length, msg.indexOf("\n"));
+        var msg = this.linkifyString( this.editor.getValue() );
+        //console.log("MESSAGE", msg, msg.length, msg.indexOf("\n"));
         if (msg !== '' && msg != this.editorInitialMessage && (msg.indexOf("\n") === -1 || msg.length > 1)) {
             this.addMessage({from:"me", msg:msg});
             this.fireEvent("message", this, {from:"me", msg:msg});
@@ -194,5 +196,9 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
             this.editor.focus();
         }
     }
-
+    ,linkifyString:function( inString ) {
+        var re = new RegExp("(https?://[^\f\n\r\t\v ]+)", "gi");
+        var linkified = inString.replace(re,'<a href="$1" target="_blank" >$1</a>' );
+        return linkified;
+    }
 });
