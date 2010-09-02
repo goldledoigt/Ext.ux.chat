@@ -31,7 +31,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         };
 
         console.log("WIDTH", this.width);
-        
+
         var spec = {
             tag:"div"
             ,cls:"x-chat"
@@ -40,7 +40,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                 ,height:this.height.toString() + "px"
             }
             ,children:[{
-                  tag:"div"
+                tag:"div"
                 ,cls:"x-chat-webcam"
                 ,id:'x-chat-webcampanel'
                 ,style:{
