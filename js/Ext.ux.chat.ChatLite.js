@@ -71,14 +71,15 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                     ,cls:"x-chat-form-editor"
                     ,style:{
                         "float":"left"
-                        ,width:(this.width - 90).toString() + "px"
+                        ,width:(this.width - 75).toString() + "px"
                         ,height:"100%"
                     }
                     ,children:[{
                         tag:"textarea"
                         ,onclick:"if (this.value == chat.editorInitialMessage) {this.value='';this.style.color='black'}"
                         ,onblur:"if (this.value == '') {chat.clearEditor();}"
-                        ,onKeyUp:"if ((event.keyCode || event.charCode) == 13 ) {(function() {chat.onButtonClick();chat.button.focus();chat.button.blur();}).defer(10);};"
+                        ,onKeyDown:"if (this.value == chat.editorInitialMessage) {this.value='';this.style.color='black';}"
+                        ,onKeyUp:"if ((event.keyCode || event.charCode) == 13 ) {chat.onButtonClick();};"
                         ,html:this.editorInitialMessage
                         ,style:{
                             width:'100%'
@@ -92,7 +93,8 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                         ,cls:"x-chat-form-button"
                         ,style:{
                             "float":"left"
-                            ,width:'70px'
+                            ,"font-size":"12px"
+                            ,width:'55px'
                             ,height:this.editorHeight
                             //,"font-size":"16px"
                         }

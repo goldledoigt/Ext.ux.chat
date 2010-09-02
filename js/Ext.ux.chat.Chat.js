@@ -66,7 +66,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
                     region:"east"
                     ,xtype:"button"
                     ,text:"Envoyer"
-                    ,width:75
+                    ,width:50
                     ,scope:this
                     ,handler:this.onButtonClick
                 }]
