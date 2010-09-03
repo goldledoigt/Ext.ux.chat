@@ -246,7 +246,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         }
         var height = (Ext.isIE)?document.body.clientHeight - 20:window.innerHeight;
         chat.setHeight(height- 0.5);
-        console.log("click");
+        //console.log("click");
     }
 
 });
