@@ -214,7 +214,9 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         //console.log("MESSAGE", msg, msg.length, msg.indexOf("\n"));
         if (msg !== '' && msg != this.editorInitialMessage && (msg.indexOf("\n") === -1 || msg.length > 1)) {
             var now = new Date();
-            var ntime = now.getHours() + ':' + now.getMinutes()
+            minutes = now.getMinutes();
+            if (minutes < 10)  minutes = "0" + minutes;
+            var ntime = now.getHours() + ':' + minutes;
             var msgdata = {
                 from:"me", 
                 msg:msg, 

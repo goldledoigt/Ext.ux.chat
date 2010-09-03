@@ -181,7 +181,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
           ,title:"Communications"
 	      ,height:205
 	      ,floatable:false
-          ,collapsible:true//this.webcamCollapsible
+          ,collapsible:this.webcamCollapsible
           ,collapsed:this.webcamCollapsed
           ,collapsedTitle:"Communications"
 	      ,cls:"x-chat-campanel"
@@ -253,7 +253,9 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
         var style = (data.from=='me')? "background-color:#EFEFEF" : "";
         if (!data.time) {
             now = new Date();
-            data.time = now.getHours() + ':' + now.getMinutes()
+            minutes = now.getMinutes();
+            if (minutes < 10)  minutes = "0" + minutes;
+            data.time = now.getHours() + ':' + minutes;
         }
         this.list.add({
             border:false
@@ -271,7 +273,9 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     ,onButtonClick:function() {
         var msg = this.linkifyString( this.editor.getValue() );
         var now = new Date();
-        var ntime = now.getHours() + ':' + now.getMinutes()
+        minutes = now.getMinutes();
+        if (minutes < 10)  minutes = "0" + minutes;
+        var ntime = now.getHours() + ':' + minutes;
         var msgdata = {
             from:"me", 
             msg:msg, 
