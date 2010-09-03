@@ -271,7 +271,12 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     }
 
     ,onButtonClick:function() {
-        var msg = this.linkifyString( this.editor.getValue() );
+        var msg = this.editor.getValue();
+        if (msg.replace(/\s/g, '') == '') {
+            this.editor.setValue('');
+            return false;
+        }
+        var msg = this.linkifyString( msg );
         var now = new Date();
         minutes = now.getMinutes();
         if (minutes < 10)  minutes = "0" + minutes;
