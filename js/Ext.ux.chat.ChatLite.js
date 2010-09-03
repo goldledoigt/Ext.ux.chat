@@ -174,13 +174,20 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
 
     ,addMessage:function(o) {
         var striped = (o.from === "me") ? "striped" : "";
+
         Ext.DomHelper.append(this.list, {
             tag:"div"
             ,cls:"x-chat-msg-wrap "+striped
             ,children:[{
                 tag:"div"
                 ,cls:"x-chat-msg-header"
-                ,html:o.from + ":"
+                //,html:o.from + ":"
+                ,children:[o.from + ":",
+                ,{
+                     tag:'span'
+                     ,cls:'x-chat-msg-time'
+                     ,html:o.time
+                }]
             }, {
                 tag:"div"
                 ,cls:"x-chat-msg-body"
@@ -206,8 +213,15 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         var msg = this.linkifyString( this.editor.getValue() );
         //console.log("MESSAGE", msg, msg.length, msg.indexOf("\n"));
         if (msg !== '' && msg != this.editorInitialMessage && (msg.indexOf("\n") === -1 || msg.length > 1)) {
-            this.addMessage({from:"me", msg:msg});
-            this.fireEvent("message", this, {from:"me", msg:msg});
+            var now = new Date();
+            var ntime = now.getHours() + ':' + now.getMinutes()
+            var msgdata = {
+                from:"me", 
+                msg:msg, 
+                time:ntime
+            }
+            this.addMessage( msgdata );
+            this.fireEvent("message", this, msgdata );
             this.clearEditor();
             this.editor.focus();
         }

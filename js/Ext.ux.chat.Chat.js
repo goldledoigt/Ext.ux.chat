@@ -152,11 +152,11 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     ,initComponent:function() {
 
       this.msgTpl = new Ext.Template(
-	'<div class="x-chat-msg-wrap">'
-	,'<div class="x-chat-msg-header">{from}:</div>'
-	,'<div class="x-chat-msg-body">{msg}</div>'
-	,'</div>'
-	,{compiled:true}
+        '<div class="x-chat-msg-wrap">'
+        ,'<div class="x-chat-msg-header">{from}:<span class="x-chat-msg-time">{time}</span></div>'
+        ,'<div class="x-chat-msg-body">{msg}</div>'
+        ,'</div>'
+        ,{compiled:true}
       );
 
       Ext.apply(this, {
@@ -250,14 +250,17 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     }
 
     ,addMessage:function(data) {
-      var style = (this.list.items.getCount() % 2)
-	? "background-color:#EFEFEF" : "";
+        var style = (data.from=='me')? "background-color:#EFEFEF" : "";
+        if (!data.time) {
+            now = new Date();
+            data.time = now.getHours() + ':' + now.getMinutes()
+        }
         this.list.add({
             border:false
             //,padding:"2 5"
-	    ,cls:"x-chat-msg"
-	    ,bodyStyle:style
-	    ,html:this.msgTpl.apply(data)
+            ,cls:"x-chat-msg"
+            ,bodyStyle:style
+            ,html:this.msgTpl.apply(data)
         });
         this.list.doLayout();
         this.fireEvent("recieve", this, data);
@@ -267,8 +270,16 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
 
     ,onButtonClick:function() {
         var msg = this.linkifyString( this.editor.getValue() );
-        this.addMessage({from:"me", msg:msg});
-        this.fireEvent("send", this, {from:"me", msg:msg});
+        var now = new Date();
+        var ntime = now.getHours() + ':' + now.getMinutes()
+        var msgdata = {
+            from:"me", 
+            msg:msg, 
+            time:ntime
+        }
+        
+        this.addMessage( msgdata );
+        this.fireEvent("send", this, msgdata );
         this.clearEditor();
         this.editor.focus();
     }
