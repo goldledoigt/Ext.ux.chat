@@ -26,3 +26,39 @@ x    margin:0 2px 4px 4px;
     color:darkgrey;
     font-size:12px;
 }
+
+
+
+.x-chat-campanel .x-panel-header {
+  border-width:0 0 1px 0;
+
+}
+
+
+.x-chat-campanel .x-panel-body {
+  background-image:url("../img/webcam.png");
+  background-position:50% 60%;
+  background-repeat:no-repeat;
+  cursor:pointer;
+   text-align:center;
+  color:#15428B;
+  background-color:#DFE8F6;
+  font:14px tahoma,arial,helvetica,sans-serif;
+  font-weight:bold;
+}
+.x-chat-campanel {
+
+
+}
+
+.x-panel-body {
+
+}
+.x-chat-collapsed-title {
+    margin:2px 0 0 5px;
+    color:#15428B;
+    font-family:tahoma,arial,verdana,sans-serif;
+    font-size:11px;
+    font-weight:bold;
+    float:left;
+}

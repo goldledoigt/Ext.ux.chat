@@ -23,11 +23,23 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         var dh = Ext.DomHelper;
 
         this.webcamIntro = {
-            tag:'img'
+            tag:'div'
             ,id:this.webcamTargetId
-            ,src:'/apps/whiteboard/static/img/webcamactivate.png'
-            ,onclick:'chat.openWebcam();'
-            ,style:'cursor:pointer'
+             ,onclick:'chat.openWebcam();'
+                ,style:'cursor:pointer'
+            ,children:[
+                {
+                html:gettext('activer la webcam')
+                ,cls:'x-chat-activate'
+         
+                },
+                {
+                tag:'img'
+                ,src:'/apps/extplugins/static/js/Ext.ux.chat/img/webcam.png'
+               
+                }
+                
+              ]
         };
 
         var spec = {

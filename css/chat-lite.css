@@ -87,3 +87,10 @@ x    margin:0 2px 4px 4px;
     color:darkgrey;
     font-size:12px;
 }
+
+.x-chat-activate {
+     font:14px tahoma,arial,helvetica,sans-serif;
+     color:#15428B;
+     font-weight:bold;
+     margin-top:7px;
+}

@@ -39,31 +39,32 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
             }]
             */
             ,items:[{
-	      region:"north"
-	      ,ref:"camPanel"
-          ,title:gettext("Communications")
-	      ,height:205
-	      ,floatable:false
-          ,collapsible:this.webcamCollapsible
-          ,collapsed:this.webcamCollapsed
-          ,collapsedTitle:"Communications"
-	      ,cls:"x-chat-campanel"
-	      ,cmargins:"5 5 0 5"
-	      ,bodyStyle:"border-width:0 0 1 0"
-	      ,listeners:{
-		scope:this
-		,afterrender:function(panel) {
-		  //console.log("afterrender", this, arguments, this.body.id);
-		  panel.body.on({scope:this, click:this.onCamPanelClick});
-		}
-		,collapse:function() {
-		    if (!this.camPanel.hasBeenCollapsed) {
-		        var el = this.getEl().child(".x-layout-collapsed-north");
-		        el.insertHtml("afterBegin", '<div class="x-chat-collapsed-title">Communications</div>');
-		        this.camPanel.hasBeenCollapsed = true;
-	        }
-		}
-	      }
+              region:"north"
+              ,ref:"camPanel"
+              ,title:gettext("Communications")
+              ,height:205
+              ,floatable:false
+              ,collapsible:this.webcamCollapsible
+              ,collapsed:this.webcamCollapsed
+              ,collapsedTitle:"Communications"
+              ,cls:"x-chat-campanel"
+              ,cmargins:"5 5 0 5"
+              ,html:'<br>' + gettext("activer la webcam")
+
+              ,listeners:{
+                    scope:this
+                    ,afterrender:function(panel) {
+                      //console.log("afterrender", this, arguments, this.body.id);
+                      panel.body.on({scope:this, click:this.onCamPanelClick});
+                    }
+                    ,collapse:function() {
+                        if (!this.camPanel.hasBeenCollapsed) {
+                            var el = this.getEl().child(".x-layout-collapsed-north");
+                            el.insertHtml("afterBegin", '<div class="x-chat-collapsed-title">Communications</div>');
+                            this.camPanel.hasBeenCollapsed = true;
+                        }
+                    }
+              }
 	    }, {
                 region:"center"
                 ,ref:"list"
