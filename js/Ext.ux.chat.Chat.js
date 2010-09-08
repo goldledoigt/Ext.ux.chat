@@ -1,141 +1,3 @@
- /* test
-
-Ext.override(Ext.layout.BorderLayout, { 
-     southTitleAdded  : false, 
-         // private 
-     onLayout : function(ct, target){ 
-
-         var collapsed; 
-         if(!this.rendered){ 
-              
-             target.position(); 
-             target.addClass('x-border-layout-ct'); 
-             var items = ct.items.items; 
-             collapsed = []; 
-             for(var i = 0, len = items.length; i < len; i++) { 
-                 var c = items[i]; 
-                 var pos = c.region; 
-                 if(c.collapsed){ 
-                     collapsed.push(c); 
-                 } 
-                 c.collapsed = false; 
-                 if(!c.rendered){ 
-                     c.cls = c.cls ? c.cls +' x-border-panel' : 'x-border-panel'; 
-                     c.render(target, i); 
-                 } 
-                 this[pos] = pos != 'center' && c.split ? 
-                     new Ext.layout.BorderLayout.SplitRegion(this, c.initialConfig, pos) : 
-                     new Ext.layout.BorderLayout.Region(this, c.initialConfig, pos); 
-                 this[pos].render(target, c); 
-             } 
-             this.rendered = true; 
-         } 
-  
-         var size = target.getViewSize(); 
-         if(size.width < 20 || size.height < 20){ // display none? 
-             if(collapsed){ 
-                 this.restoreCollapsed = collapsed; 
-             } 
-             return; 
-         }else if(this.restoreCollapsed){ 
-             collapsed = this.restoreCollapsed; 
-             delete this.restoreCollapsed; 
-         } 
-  
-         var w = size.width, h = size.height; 
-         var centerW = w, centerH = h, centerY = 0, centerX = 0; 
-  
-         var n = this.north, s = this.south, west = this.west, e = this.east, c = this.center;
-         if(!c){ 
-             throw 'No center region defined in BorderLayout ' + ct.id; 
-         } 
-  
-         if(n && n.isVisible()){ 
-             var b = n.getSize(); 
-             var m = n.getMargins(); 
-             b.width = w - (m.left+m.right); 
-             b.x = m.left; 
-             b.y = m.top; 
-             centerY = b.height + b.y + m.bottom; 
-             centerH -= centerY; 
-             n.applyLayout(b); 
-         } 
-         if(s && s.isVisible()){ 
-             var b = s.getSize(); 
-             var m = s.getMargins(); 
-             b.width = w - (m.left+m.right); 
-             b.x = m.left; 
-             var totalHeight = (b.height + m.top + m.bottom); 
-             b.y = h - totalHeight + m.top; 
-             centerH -= totalHeight; 
-             s.applyLayout(b); 
-
-             //TDGi custom title for south 
-             //new config options for south region: 
-             //  collapsedTitle        : 'string' 
-             //  collapsedTitleCls    :  'string' 
-             //  collapsedTitleStyle :  'string' 
-             if (typeof s.collapsedEl != 'undefined' && s.collapsedTitle && this.southTitleAdded == false) { 
-                 this.southTitleAdded = true; 
-                 var cDiv = s.collapsedEl; 
-                 var tpl  = new Ext.Template('<div style="float: left;">{txt}</div>'); 
-
-                 var insertedHtml = tpl.insertFirst(cDiv,{ txt : s.collapsedTitle }); 
-                 if (s.collapsedTitleStyle) { 
-                     insertedHtml.applyStyles(s.collapsedTitleStyle); 
-                 } 
-                  
-                 if (s.collapsedTitleCls) { 
-                     Ext.get(insertedHtml).addClass(s.collapsedTitleCls); 
-                 } 
-
-             }                 
-         } 
-         if(west && west.isVisible()){ 
-             var b = west.getSize(); 
-             var m = west.getMargins(); 
-             b.height = centerH - (m.top+m.bottom); 
-             b.x = m.left; 
-             b.y = centerY + m.top; 
-             var totalWidth = (b.width + m.left + m.right); 
-             centerX += totalWidth; 
-             centerW -= totalWidth; 
-             west.applyLayout(b); 
-         } 
-         if(e && e.isVisible()){ 
-             var b = e.getSize(); 
-             var m = e.getMargins(); 
-             b.height = centerH - (m.top+m.bottom); 
-             var totalWidth = (b.width + m.left + m.right); 
-             b.x = w - totalWidth + m.left; 
-             b.y = centerY + m.top; 
-             centerW -= totalWidth; 
-             e.applyLayout(b); 
-         } 
-  
-         var m = c.getMargins(); 
-         var centerBox = { 
-             x: centerX + m.left, 
-             y: centerY + m.top, 
-             width: centerW - (m.left+m.right), 
-             height: centerH - (m.top+m.bottom) 
-         }; 
-         c.applyLayout(centerBox); 
-  
-         if(collapsed){ 
-             for(var i = 0, len = collapsed.length; i < len; i++){ 
-                 collapsed[i].collapse(false); 
-             } 
-         } 
-  
-         if(Ext.isIE && Ext.isStrict){ // workaround IE strict repainting issue 
-             target.repaint(); 
-         } 
-     } 
- });
-
-*/
-
 Ext.ns("Ext.ux.chat");
 
 Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
@@ -149,15 +11,15 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     ,webcamCollapsed:false
 
     ,webcamCollapsible:false
-    
+
     ,initComponent:function() {
 
       this.msgTpl = new Ext.Template(
-	'<div class="x-chat-msg-wrap">'
-	,'<div class="x-chat-msg-header">{from}:</div>'
-	,'<div class="x-chat-msg-body">{msg}</div>'
-	,'</div>'
-	,{compiled:true}
+        '<div class="x-chat-msg-wrap">'
+        ,'<div class="x-chat-msg-header">{from}:<span class="x-chat-msg-time">{time}</span></div>'
+        ,'<div class="x-chat-msg-body">{msg}</div>'
+        ,'</div>'
+        ,{compiled:true}
       );
 
       Ext.apply(this, {
@@ -182,7 +44,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
           ,title:gettext("Communications")
 	      ,height:205
 	      ,floatable:false
-          ,collapsible:true//this.webcamCollapsible
+          ,collapsible:this.webcamCollapsible
           ,collapsed:this.webcamCollapsed
           ,collapsedTitle:"Communications"
 	      ,cls:"x-chat-campanel"
@@ -220,12 +82,12 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
                     ,border:false
                     ,enableKeyEvents :true
                     ,cls:"chat-textarea"
-                    ,emptyText:'Saisissez votre message puis cliquez sur envoyer'
+                    ,emptyText:gettext('Saisissez votre message puis cliquez sur envoyer')
                     ,margins:"0 5 0 0"
                 }, {
                     region:"east"
                     ,xtype:"button"
-                    ,text:"Envoyer"
+                    ,text:gettext("Envoyer")
                     ,width:50
                     ,scope:this
                     ,handler:this.onButtonClick
@@ -236,7 +98,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
         this.addEvents("send", "recieve", "openWebcam");
 
         Ext.ux.chat.Chat.superclass.initComponent.call(this);
-        
+
         this.editor.on('keydown', function(textarea, event) {
             //console.log('keydown', event.charCode, event.keyCode );
             if ( event.charCode == 13 ||  event.keyCode == 13) {
@@ -251,14 +113,19 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     }
 
     ,addMessage:function(data) {
-      var style = (this.list.items.getCount() % 2)
-	? "background-color:#EFEFEF" : "";
+        var style = (data.from=='me')? "background-color:#EFEFEF" : "";
+        if (!data.time) {
+            now = new Date();
+            minutes = now.getMinutes();
+            if (minutes < 10)  minutes = "0" + minutes;
+            data.time = now.getHours() + ':' + minutes;
+        }
         this.list.add({
             border:false
             //,padding:"2 5"
-	    ,cls:"x-chat-msg"
-	    ,bodyStyle:style
-	    ,html:this.msgTpl.apply(data)
+            ,cls:"x-chat-msg"
+            ,bodyStyle:style
+            ,html:this.msgTpl.apply(data)
         });
         this.list.doLayout();
         this.fireEvent("recieve", this, data);
@@ -267,9 +134,24 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     }
 
     ,onButtonClick:function() {
-        var msg = this.linkifyString( this.editor.getValue() );
-        this.addMessage({from:"me", msg:msg});
-        this.fireEvent("send", this, {from:"me", msg:msg});
+        var msg = this.editor.getValue();
+        if (msg.replace(/\s/g, '') == '') {
+            this.editor.setValue('');
+            return false;
+        }
+        var msg = this.linkifyString( msg );
+        var now = new Date();
+        minutes = now.getMinutes();
+        if (minutes < 10)  minutes = "0" + minutes;
+        var ntime = now.getHours() + ':' + minutes;
+        var msgdata = {
+            from:"me",
+            msg:msg,
+            time:ntime
+        }
+
+        this.addMessage( msgdata );
+        this.fireEvent("send", this, msgdata );
         this.clearEditor();
         this.editor.focus();
     }
@@ -285,12 +167,12 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
             ,useVideo:1
             ,doStream:1
             ,debug:(document.location.search.substring(1).indexOf('DEBUG') > -1)?1:0
-    //	    ,height:200 
+    //	    ,height:200
     //	    ,width:300
             ,r:Math.random()
           }
         });
-        
+
         this.camPanel.add(this.flash);
         this.camPanel.doLayout();
         this.fireEvent("openWebcam", this);

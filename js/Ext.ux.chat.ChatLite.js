@@ -16,7 +16,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
 
     ,editorHeight:0
     ,webcamHeight:160
-    ,editorInitialMessage:'Saisissez votre message puis cliquez sur envoyer'
+    ,editorInitialMessage:gettext('Saisissez votre message puis cliquez sur envoyer')
     ,webcamTargetId:'chat-webcam-container'
     ,render:function(el) {
 
@@ -102,7 +102,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                         }]
                     },{
                         tag:"button"
-                        ,html:"Envoyer"
+                        ,html:gettext("Envoyer")
                         ,cls:"x-chat-form-button"
                         ,style:{
                             "float":"left"
@@ -174,13 +174,20 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
 
     ,addMessage:function(o) {
         var striped = (o.from === "me") ? "striped" : "";
+
         Ext.DomHelper.append(this.list, {
             tag:"div"
             ,cls:"x-chat-msg-wrap "+striped
             ,children:[{
                 tag:"div"
                 ,cls:"x-chat-msg-header"
-                ,html:o.from + ":"
+                //,html:o.from + ":"
+                ,children:[o.from + ":",
+                ,{
+                     tag:'span'
+                     ,cls:'x-chat-msg-time'
+                     ,html:o.time
+                }]
             }, {
                 tag:"div"
                 ,cls:"x-chat-msg-body"
@@ -206,8 +213,17 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         var msg = this.linkifyString( this.editor.getValue() );
         //console.log("MESSAGE", msg, msg.length, msg.indexOf("\n"));
         if (msg !== '' && msg != this.editorInitialMessage && (msg.indexOf("\n") === -1 || msg.length > 1)) {
-            this.addMessage({from:"me", msg:msg});
-            this.fireEvent("message", this, {from:"me", msg:msg});
+            var now = new Date();
+            minutes = now.getMinutes();
+            if (minutes < 10)  minutes = "0" + minutes;
+            var ntime = now.getHours() + ':' + minutes;
+            var msgdata = {
+                from:"me", 
+                msg:msg, 
+                time:ntime
+            }
+            this.addMessage( msgdata );
+            this.fireEvent("message", this, msgdata );
             this.clearEditor();
             this.editor.focus();
         }
@@ -232,7 +248,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
         }
         var height = (Ext.isIE)?document.body.clientHeight - 20:window.innerHeight;
         chat.setHeight(height- 0.5);
-        console.log("click");
+        //console.log("click");
     }
 
 });
