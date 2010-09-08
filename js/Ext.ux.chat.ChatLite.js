@@ -16,7 +16,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
 
     ,editorHeight:0
     ,webcamHeight:160
-    ,editorInitialMessage:'Saisissez votre message puis cliquez sur envoyer'
+    ,editorInitialMessage:gettext('Saisissez votre message puis cliquez sur envoyer')
     ,webcamTargetId:'chat-webcam-container'
     ,render:function(el) {
 
@@ -102,7 +102,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                         }]
                     },{
                         tag:"button"
-                        ,html:"Envoyer"
+                        ,html:gettext("Envoyer")
                         ,cls:"x-chat-form-button"
                         ,style:{
                             "float":"left"

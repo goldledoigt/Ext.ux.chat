@@ -1,3 +1,4 @@
+
 /*
 
 Ext.override(Ext.layout.BorderLayout, { 
@@ -219,12 +220,12 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
                     ,border:false
                     ,enableKeyEvents :true
                     ,cls:"chat-textarea"
-                    ,emptyText:'Saisissez votre message puis cliquez sur envoyer'
+                    ,emptyText:gettext('Saisissez votre message puis cliquez sur envoyer')
                     ,margins:"0 5 0 0"
                 }, {
                     region:"east"
                     ,xtype:"button"
-                    ,text:"Envoyer"
+                    ,text:gettext("Envoyer")
                     ,width:50
                     ,scope:this
                     ,handler:this.onButtonClick
