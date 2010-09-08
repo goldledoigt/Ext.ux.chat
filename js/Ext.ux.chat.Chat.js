@@ -1,4 +1,4 @@
-/*
+ /* test
 
 Ext.override(Ext.layout.BorderLayout, { 
      southTitleAdded  : false, 
@@ -147,6 +147,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     ,editorHeight:0
 
     ,webcamCollapsed:false
+
     ,webcamCollapsible:false
     
     ,initComponent:function() {
@@ -178,7 +179,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
             ,items:[{
 	      region:"north"
 	      ,ref:"camPanel"
-          ,title:"Communications"
+          ,title:gettext("Communications")
 	      ,height:205
 	      ,floatable:false
           ,collapsible:true//this.webcamCollapsible
