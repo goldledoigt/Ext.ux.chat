@@ -42,6 +42,7 @@ Ext.extend(Ext.ux.chat.ChatLite, Ext.util.Observable, {
                 ,cls:"x-chat-title"
                 ,style:{
                     height:"25px"
+                    ,'text-align':'right'
                 }
                 ,children:[{
                     tag:"div"
