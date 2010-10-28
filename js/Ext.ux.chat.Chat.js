@@ -113,7 +113,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
         this.editor.reset();
     }
 
-    ,addMessage:function(data) {
+    ,addMessage:function(data, relayEvent) {
         var style = (data.from=='me')? "background-color:#EFEFEF" : "";
         if (!data.time) {
             now = new Date();
@@ -132,6 +132,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
         this.fireEvent("recieve", this, data);
         // scroll down
         this.list.body.dom.scrollTop = this.list.body.dom.scrollHeight;
+        if (relayEvent) this.fireEvent("send", this, data );
     }
 
     ,onButtonClick:function() {
