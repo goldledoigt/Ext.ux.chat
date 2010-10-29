@@ -173,7 +173,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
             ,a:1    // enableAudio
             ,v:1    // enableVideo
           }
-        });
+        }); 
 
         this.camPanel.add(this.flash);
         this.camPanel.doLayout();
