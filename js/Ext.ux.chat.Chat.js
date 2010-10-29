@@ -161,17 +161,17 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     ,onCamPanelClick:function() {
       if (!this.flash) {
         this.flash = new Ext.FlashComponent({
-          url:"/apps/whiteboard/static/js/StratusWidget2.swf"
+          url:"/apps/widget/static/FlexStratusWidget.swf"
           ,backgroundColor:"#FFFFFF"
           //,flashVersion:"10.0.0"
           ,flashVars:{
             mode:"master"
-            ,useVideo:1
-            ,doStream:1
             ,debug:(document.location.search.substring(1).indexOf('DEBUG') > -1)?1:0
-    //	    ,height:200
-    //	    ,width:300
             ,r:Math.random()
+            ,cb:'WEBCAM_callback'
+            ,closecb:'WEBCAM_callbackClose'
+            ,a:1    // enableAudio
+            ,v:1    // enableVideo
           }
         });
 
