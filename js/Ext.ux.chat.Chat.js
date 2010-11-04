@@ -100,7 +100,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
 
         Ext.ux.chat.Chat.superclass.initComponent.call(this);
 
-        this.editor.on('keydown', function(textarea, event) {
+        this.editor.on('keyup', function(textarea, event) {
             //console.log('keydown', event.charCode, event.keyCode );
             if ( event.charCode == 13 ||  event.keyCode == 13) {
                 this.onButtonClick();
@@ -114,6 +114,7 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
     }
 
     ,addMessage:function(data, relayEvent) {
+//        console.log('addMessage', arguments);
         var style = (data.from=='me')? "background-color:#EFEFEF" : "";
         if (!data.time) {
             now = new Date();
@@ -141,7 +142,12 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
             this.editor.setValue('');
             return false;
         }
-        var msg = this.linkifyString( msg );
+        
+        // html pre-encode
+        msg = Ext.util.Format.htmlEncode( msg );
+        // add links if any
+        msg = this.linkifyString( msg );
+        
         var now = new Date();
         minutes = now.getMinutes();
         if (minutes < 10)  minutes = "0" + minutes;
