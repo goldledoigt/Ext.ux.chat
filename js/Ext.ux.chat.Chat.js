@@ -183,8 +183,10 @@ Ext.ux.chat.Chat = Ext.extend(Ext.Panel, {
       }
     }
     ,webcamClosed:function() {
-        this.setWebcamIntro();
-        this.webcam = null;
+        if (this.webcam) {
+            this.setWebcamIntro();
+            this.webcam = null;
+            }
     }
     ,setWebcamIntro:function() {
         if (this.flash && (typeof(this.flash.destroy)!='undefined') ) this.flash.destroy();
